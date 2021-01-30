@@ -71,11 +71,11 @@ struct vector3D
  *              this elements have 0 as their value.                          *
  * -------------------------------------------------------------------------- *
  * input:  vector1D *v      // pointer to some vector v                       *
- *         integer   n      // total number of elements                       *
+ *         integer   size   // total number of elements                       *
  * -------------------------------------------------------------------------- *
  * output: v->x = [0, ..., 0]                                                 *
  ******************************************************************************/
-void zeroVector1D(vector1D *v, const integer n);
+void zeroVector1D(vector1D *v, const integer size);
 
 /******************************************************************************
  * Function:    makeVector1D                                                  *
@@ -85,11 +85,11 @@ void zeroVector1D(vector1D *v, const integer n);
  *              components and attributes value 0 for every element.          *
  * -------------------------------------------------------------------------- *
  * input:  vector1D *v      // pointer to some vector v                       *
- *         int       n      // total number of elements                       *
+ *         int       size   // total number of elements                       *
  * -------------------------------------------------------------------------- *
  * output: v                // vector v                                       *
  ******************************************************************************/
-void makeVector1D(vector1D *v, const integer n);
+void makeVector1D(vector1D *v, const integer size);
 
 /******************************************************************************
  * Function:    freeVector1D                                                  *
@@ -111,11 +111,11 @@ void freeVector1D(vector1D *v);
  * -------------------------------------------------------------------------- *
  * input:  vector1D *v      // pointer to some vector v                       *
  *         vector1D *w      // pointer to some vector w                       *
- *         integer   n      // total number of elements                       *
+ *         integer   size   // total number of elements                       *
  * -------------------------------------------------------------------------- *
  * output: w                // vector w                                       *
  ******************************************************************************/
-void copyVector1D(vector1D *v, vector1D *w, const integer n);
+void copyVector1D(vector1D *v, vector1D *w, const integer size);
 
 /*2D ALGEBRA ---------------------------------------------------------------- */
 
@@ -126,11 +126,11 @@ void copyVector1D(vector1D *v, vector1D *w, const integer n);
  *              n elements, and this elements have 0 as their value.          *
  * -------------------------------------------------------------------------- *
  * input:  vector2D *v      // pointer to some vector v                       *
- *         integer   n      // total number of elements                       *
+ *         integer   size   // total number of elements                       *
  * -------------------------------------------------------------------------- *
  * output: v->x = [0, ..., 0], v->y = [0, ..., 0]                             *
  ******************************************************************************/
-void zeroVector2D(vector2D *v, const integer n);
+void zeroVector2D(vector2D *v, const integer size);
 
 /******************************************************************************
  * Function:    makeVector2D                                                  *
@@ -140,11 +140,11 @@ void zeroVector2D(vector2D *v, const integer n);
  *              components and attributes value 0 for every element.          *
  * -------------------------------------------------------------------------- *
  * input:  vector2D *v      // pointer to some vector v                       *
- *         int       n      // total number of elements                       *
+ *         int       size   // total number of elements                       *
  * -------------------------------------------------------------------------- *
  * output: v                // vector v                                       *
  ******************************************************************************/
-void makeVector2D(vector2D *v, const integer n);
+void makeVector2D(vector2D *v, const integer size);
 
 /******************************************************************************
  * Function:    freeVector2D                                                    *
@@ -166,7 +166,7 @@ void freeVector2D(vector2D *v);
  * -------------------------------------------------------------------------- *
  * input:  vector2D *v      // pointer to some vector v                       *
  *         vector2D *w      // pointer to some vector w                       *
- *         integer   n      // total number of elements                       *
+ *         integer   size   // total number of elements                       *
  * -------------------------------------------------------------------------- *
  * output: w                // vector w                                       *
  ******************************************************************************/
@@ -178,14 +178,14 @@ void copyVector2D(vector2D *v, vector2D *w, const integer n);
  * Function:    zeroVector3D                                                  *
  * -------------------------------------------------------------------------- *
  * description: create a vector {x, y, z}, where x, y and z are arrays with n *
- *              n elements, and this elements have 0 as their value.          *
+ *              elements, and this elements have 0 as their value.            *
  * -------------------------------------------------------------------------- *
  * input:  vector3D *v      // pointer to some vector v                       *
- *         integer   n      // total number of elements                       *
+ *         integer   size   // total number of elements                       *
  * -------------------------------------------------------------------------- *
  * output: v->x = [0, ..., 0], v->y = [0, ..., 0], v->z = [0, ..., 0]         *
  ******************************************************************************/
-void zeroVector3D(vector3D *v, const integer n);
+void zeroVector3D(vector3D *v, const integer size);
 
 /******************************************************************************
  * Function:    makeVector3D                                                  *
@@ -195,11 +195,11 @@ void zeroVector3D(vector3D *v, const integer n);
  *              components and attributes value 0 for every element.          *
  * -------------------------------------------------------------------------- *
  * input:  vector3D *v      // pointer to some vector v                       *
- *         int       n      // total number of elements                       *
+ *         int       size   // total number of elements                       *
  * -------------------------------------------------------------------------- *
  * output: v                // vector v                                       *
  ******************************************************************************/
-void makeVector3D(vector3D *v, const integer n);
+void makeVector3D(vector3D *v, const integer size);
 
 /******************************************************************************
  * Function:    freeVector3D                                                  *
@@ -221,7 +221,7 @@ void freeVector3D(vector3D *v);
  * -------------------------------------------------------------------------- *
  * input:  vector3D *v      // pointer to some vector v                       *
  *         vector3D *w      // pointer to some vector w                       *
- *         integer   n      // total number of elements                       *
+ *         integer   size   // total number of elements                       *
  * -------------------------------------------------------------------------- *
  * output: w                // vector w                                       *
  ******************************************************************************/
@@ -244,11 +244,11 @@ void copyVector3D(vector3D *v, vector3D *w, const integer n);
  * input:  vector1D *v      // pointer to some vector v                       *
  *         vector1D *w      // pointer to some vector w                       *
  *         vector1D *s      // pointer to some vector s                       *
- *         integer   n      // total number of elements                       *
+ *         integer   size   // total number of elements                       *
  * -------------------------------------------------------------------------- *
  * output: s                // result vector of the addition                  *
  ******************************************************************************/
-void addVector1D(vector1D *v, vector1D *w, vector1D *s, const integer n);
+void addVector1D(vector1D *v, vector1D *w, vector1D *s, const integer size);
 
 /******************************************************************************
  * Function:    subVector1D                                                   *
@@ -259,11 +259,11 @@ void addVector1D(vector1D *v, vector1D *w, vector1D *s, const integer n);
  * input:  vector1D *v      // pointer to some vector v                       *
  *         vector1D *w      // pointer to some vector w                       *
  *         vector1D *s      // pointer to some vector s                       *
- *         integer   n      // total number of elements                       *
+ *         integer   size   // total number of elements                       *
  * -------------------------------------------------------------------------- *
  * output: s                // result vector of the subtraction               *
  ******************************************************************************/
-void subVector1D(vector1D *v, vector1D *w, vector1D *s, const integer n);
+void subVector1D(vector1D *v, vector1D *w, vector1D *s, const integer size);
 
 /******************************************************************************
  * Function:    mulVector1D                                                   *
@@ -274,11 +274,11 @@ void subVector1D(vector1D *v, vector1D *w, vector1D *s, const integer n);
  * input:  vector1D *v      // pointer to some vector v                       *
  *         vector1D *w      // pointer to some vector w                       *
  *         vector1D *s      // pointer to some vector s                       *
- *         integer   n      // total number of elements                       *
+ *         integer   size   // total number of elements                       *
  * -------------------------------------------------------------------------- *
  * output: s                // result vector of the subtraction               *
  ******************************************************************************/
-void mulVector1D(vector1D *v, vector1D *w, vector1D *s, const integer n);
+void mulVector1D(vector1D *v, vector1D *w, vector1D *s, const integer size);
 
 /******************************************************************************
  * Function:    divVector1D                                                   *
@@ -289,11 +289,11 @@ void mulVector1D(vector1D *v, vector1D *w, vector1D *s, const integer n);
  * input:  vector1D *v      // pointer to some vector v                       *
  *         vector1D *w      // pointer to some vector w                       *
  *         vector1D *s      // pointer to some vector s                       *
- *         integer   n      // total number of elements                       *
+ *         integer   size   // total number of elements                       *
  * -------------------------------------------------------------------------- *
  * output: s                // result vector of the subtraction               *
  ******************************************************************************/
-void divVector1D(vector1D *v, vector1D *w, vector1D *s, const integer n);
+void divVector1D(vector1D *v, vector1D *w, vector1D *s, const integer size);
 
 
 /*2D ALGEBRA ---------------------------------------------------------------- */
@@ -307,11 +307,11 @@ void divVector1D(vector1D *v, vector1D *w, vector1D *s, const integer n);
  * input:  vector2D *v      // pointer to some vector v                       *
  *         vector2D *w      // pointer to some vector w                       *
  *         vector2D *s      // pointer to some vector s                       *
- *         integer   n      // total number of elements                       *
+ *         integer   size   // total number of elements                       *
  * -------------------------------------------------------------------------- *
  * output: s                // result vector of the addition                  *
  ******************************************************************************/
-void addVector3D(vector2D *v, vector2D *w, vector2D *s, const integer n);
+void addVector3D(vector2D *v, vector2D *w, vector2D *s, const integer size);
 
 /******************************************************************************
  * Function:    subVector2D                                                   *
@@ -322,11 +322,11 @@ void addVector3D(vector2D *v, vector2D *w, vector2D *s, const integer n);
  * input:  vector2D *v      // pointer to some vector v                       *
  *         vector2D *w      // pointer to some vector w                       *
  *         vector2D *s      // pointer to some vector s                       *
- *         integer   n      // total number of elements                       *
+ *         integer   size   // total number of elements                       *
  * -------------------------------------------------------------------------- *
  * output: s                // result vector of the subtraction               *
  ******************************************************************************/
-void subVector2D(vector2D *v, vector2D *w, vector2D *s, const integer n);
+void subVector2D(vector2D *v, vector2D *w, vector2D *s, const integer size);
 
 /******************************************************************************
  * Function:    mulVector2D                                                   *
@@ -337,11 +337,11 @@ void subVector2D(vector2D *v, vector2D *w, vector2D *s, const integer n);
  * input:  vector2D *v      // pointer to some vector v                       *
  *         vector2D *w      // pointer to some vector w                       *
  *         vector2D *s      // pointer to some vector s                       *
- *         integer   n      // total number of elements                       *
+ *         integer   size   // total number of elements                       *
  * -------------------------------------------------------------------------- *
  * output: s                // result vector of the subtraction               *
  ******************************************************************************/
-void mulVector3D(vector2D *v, vector2D *w, vector2D *s, const integer n);
+void mulVector3D(vector2D *v, vector2D *w, vector2D *s, const integer size);
 
 /******************************************************************************
  * Function:    divVector2D                                                   *
@@ -352,11 +352,11 @@ void mulVector3D(vector2D *v, vector2D *w, vector2D *s, const integer n);
  * input:  vector2D *v      // pointer to some vector v                       *
  *         vector2D *w      // pointer to some vector w                       *
  *         vector2D *s      // pointer to some vector s                       *
- *         integer   n      // total number of elements                       *
+ *         integer   size   // total number of elements                       *
  * -------------------------------------------------------------------------- *
  * output: s                // result vector of the subtraction               *
  ******************************************************************************/
-void divVector2D(vector2D *v, vector2D *w, vector2D *s, const integer n);
+void divVector2D(vector2D *v, vector2D *w, vector2D *s, const integer size);
 
 
 /*3D ALGEBRA ---------------------------------------------------------------- */
@@ -370,11 +370,11 @@ void divVector2D(vector2D *v, vector2D *w, vector2D *s, const integer n);
  * input:  vector3D *v      // pointer to some vector v                       *
  *         vector3D *w      // pointer to some vector w                       *
  *         vector3D *s      // pointer to some vector s                       *
- *         integer   n      // total number of elements                       *
+ *         integer   size      // total number of elements                       *
  * -------------------------------------------------------------------------- *
  * output: s                // result vector of the addition                  *
  ******************************************************************************/
-void addVector3D(vector3D *v, vector3D *w, vector3D *s, const integer n);
+void addVector3D(vector3D *v, vector3D *w, vector3D *s, const integer size);
 
 /******************************************************************************
  * Function:    subVector3D                                                   *
@@ -385,11 +385,11 @@ void addVector3D(vector3D *v, vector3D *w, vector3D *s, const integer n);
  * input:  vector3D *v      // pointer to some vector v                       *
  *         vector3D *w      // pointer to some vector w                       *
  *         vector3D *s      // pointer to some vector s                       *
- *         integer   n      // total number of elements                       *
+ *         integer   size   // total number of elements                       *
  * -------------------------------------------------------------------------- *
  * output: s                // result vector of the subtraction               *
  ******************************************************************************/
-void subVector3D(vector3D *v, vector3D *w, vector3D *s, const integer n);
+void subVector3D(vector3D *v, vector3D *w, vector3D *s, const integer size);
 
 /******************************************************************************
  * Function:    mulVector3D                                                   *
@@ -400,11 +400,11 @@ void subVector3D(vector3D *v, vector3D *w, vector3D *s, const integer n);
  * input:  vector3D *v      // pointer to some vector v                       *
  *         vector3D *w      // pointer to some vector w                       *
  *         vector3D *s      // pointer to some vector s                       *
- *         integer   n      // total number of elements                       *
+ *         integer   size   // total number of elements                       *
  * -------------------------------------------------------------------------- *
  * output: s                // result vector of the subtraction               *
  ******************************************************************************/
-void mulVector3D(vector3D *v, vector3D *w, vector3D *s, const integer n);
+void mulVector3D(vector3D *v, vector3D *w, vector3D *s, const integer size);
 
 /******************************************************************************
  * Function:    divVector3D                                                   *
@@ -415,10 +415,10 @@ void mulVector3D(vector3D *v, vector3D *w, vector3D *s, const integer n);
  * input:  vector3D *v      // pointer to some vector v                       *
  *         vector3D *w      // pointer to some vector w                       *
  *         vector3D *s      // pointer to some vector s                       *
- *         integer   n      // total number of elements                       *
+ *         integer   size   // total number of elements                       *
  * -------------------------------------------------------------------------- *
  * output: s                // result vector of the subtraction               *
  ******************************************************************************/
-void divVector3D(vector3D *v, vector3D *w, vector3D *s, const integer n);
+void divVector3D(vector3D *v, vector3D *w, vector3D *s, const integer size);
 
 #endif
