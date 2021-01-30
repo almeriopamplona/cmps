@@ -25,6 +25,12 @@ void makeIntArray(intArray *a, const integer size)
 {
     a -> size = size; 
     a -> v    = (integer *) malloc(size * sizeof(integer), MEM_SIZE);
+    
+    if (v -> x == NULL) 
+    {
+        printf ("ERROR: no free space in RAM to allocate x\n");
+        exit (EXIT_FAILURE);
+    }
 }
 
 void freeIntArray(intArray *a)
@@ -48,6 +54,12 @@ void makeInt32Array(int32Array *a, const integer size)
 {
     a -> size = size; 
     a -> v    = (integer32 *) malloc(size * sizeof(integer32), MEM_SIZE);
+    
+    if (v -> x == NULL) 
+    {
+        printf ("ERROR: no free space in RAM to allocate x\n");
+        exit (EXIT_FAILURE);
+    }
 }
 
 void freeInt32Array(int32Array *a)
