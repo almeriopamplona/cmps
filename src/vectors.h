@@ -276,7 +276,7 @@ void subVector1D(vector1D *v, vector1D *w, vector1D *s, const integer size);
  *         vector1D *s      // pointer to some vector s                       *
  *         integer   size   // total number of elements                       *
  * -------------------------------------------------------------------------- *
- * output: s                // result vector of the subtraction               *
+ * output: s                // result vector of the product                   *
  ******************************************************************************/
 void mulVector1D(vector1D *v, vector1D *w, vector1D *s, const integer size);
 
@@ -291,7 +291,7 @@ void mulVector1D(vector1D *v, vector1D *w, vector1D *s, const integer size);
  *         vector1D *s      // pointer to some vector s                       *
  *         integer   size   // total number of elements                       *
  * -------------------------------------------------------------------------- *
- * output: s                // result vector of the subtraction               *
+ * output: s                // result vector of the division                  *
  ******************************************************************************/
 void divVector1D(vector1D *v, vector1D *w, vector1D *s, const integer size);
 
@@ -332,14 +332,14 @@ void subVector2D(vector2D *v, vector2D *w, vector2D *s, const integer size);
  * Function:    mulVector2D                                                   *
  * -------------------------------------------------------------------------- *
  * description: uses lazy computing to multiply vectors w and v into one      *
- *              vector s.                                                 *
+ *              vector s.                                                     *
  * -------------------------------------------------------------------------- *
  * input:  vector2D *v      // pointer to some vector v                       *
  *         vector2D *w      // pointer to some vector w                       *
  *         vector2D *s      // pointer to some vector s                       *
  *         integer   size   // total number of elements                       *
  * -------------------------------------------------------------------------- *
- * output: s                // result vector of the subtraction               *
+ * output: s                // result vector of the product                   *
  ******************************************************************************/
 void mulVector3D(vector2D *v, vector2D *w, vector2D *s, const integer size);
 
@@ -354,7 +354,7 @@ void mulVector3D(vector2D *v, vector2D *w, vector2D *s, const integer size);
  *         vector2D *s      // pointer to some vector s                       *
  *         integer   size   // total number of elements                       *
  * -------------------------------------------------------------------------- *
- * output: s                // result vector of the subtraction               *
+ * output: s                // result vector of the division                  *
  ******************************************************************************/
 void divVector2D(vector2D *v, vector2D *w, vector2D *s, const integer size);
 
@@ -370,7 +370,7 @@ void divVector2D(vector2D *v, vector2D *w, vector2D *s, const integer size);
  * input:  vector3D *v      // pointer to some vector v                       *
  *         vector3D *w      // pointer to some vector w                       *
  *         vector3D *s      // pointer to some vector s                       *
- *         integer   size      // total number of elements                       *
+ *         integer   size   // total number of elements                       *
  * -------------------------------------------------------------------------- *
  * output: s                // result vector of the addition                  *
  ******************************************************************************/
@@ -395,14 +395,14 @@ void subVector3D(vector3D *v, vector3D *w, vector3D *s, const integer size);
  * Function:    mulVector3D                                                   *
  * -------------------------------------------------------------------------- *
  * description: uses lazy computing to multiply vectors w and v into one      *
- *              vector s.                                                 *
+ *              vector s.                                                     *
  * -------------------------------------------------------------------------- *
  * input:  vector3D *v      // pointer to some vector v                       *
  *         vector3D *w      // pointer to some vector w                       *
  *         vector3D *s      // pointer to some vector s                       *
  *         integer   size   // total number of elements                       *
  * -------------------------------------------------------------------------- *
- * output: s                // result vector of the subtraction               *
+ * output: s                // result vector of the product                   *
  ******************************************************************************/
 void mulVector3D(vector3D *v, vector3D *w, vector3D *s, const integer size);
 
@@ -417,7 +417,7 @@ void mulVector3D(vector3D *v, vector3D *w, vector3D *s, const integer size);
  *         vector3D *s      // pointer to some vector s                       *
  *         integer   size   // total number of elements                       *
  * -------------------------------------------------------------------------- *
- * output: s                // result vector of the subtraction               *
+ * output: s                // result vector of the division                  *
  ******************************************************************************/
 void divVector3D(vector3D *v, vector3D *w, vector3D *s, const integer size);
 
