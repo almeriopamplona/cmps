@@ -1,6 +1,6 @@
 /******************************************************************************
  *                   MPS - MOVING PARTICLES SEMI-IMPLICIT                     *
- *                             MPS_INCLUDE.h                                   *
+ *                             MPS_INCLUDE.h                                  *
  ******************************************************************************
  * Author: Almério José Venâncio Pains Soares Pamplona                        *
  * E-mail: almeriopamplona@gmail.com                                          *
