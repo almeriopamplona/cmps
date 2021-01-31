@@ -1,6 +1,6 @@
 /******************************************************************************
  *                   MPS - MOVING PARTICLES SEMI-IMPLICIT                     *
- *                             MPS_CONFIG.h                                   *
+ *                          MPS_INSTRUCTION_SET.H                             *
  ******************************************************************************
  * Author: Almério José Venâncio Pains Soares Pamplona                        *
  * E-mail: almeriopamplona@gmail.com                                          *
