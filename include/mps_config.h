@@ -1,6 +1,6 @@
 /******************************************************************************
  *                   MPS - MOVING PARTICLES SEMI-IMPLICIT                     *
- *                             MPS_CONFIG.h                                   *
+ *                             CMPS_CONFIG.h                                  *
  ******************************************************************************
  * Author: Almério José Venâncio Pains Soares Pamplona                        *
  * E-mail: almeriopamplona@gmail.com                                          *
@@ -11,31 +11,31 @@
  * The full licence is in the file LICENSE, distributed with this software.   *
  ******************************************************************************/
 
-#ifndef __MPS_CONFIG_H__
-#define __MPS_CONFIG_H__
+#ifndef __CMPS_CONFIG_H__
+#define __CMPS_CONFIG_H__
 
-#include "mps_align.h"
+#include "cmps_align.h"
 
-#define MPS_VERSION_MAJOR 1
-#define MPS_VERSION_MINOR 0
-#define MPS_VERSION_PATCH 0
+#define CMPS_VERSION_MAJOR 1
+#define CMPS_VERSION_MINOR 0
+#define CMPS_VERSION_PATCH 0
 
-#ifndef MPS_DEFAULT_ALLOCATOR
-    #if MPS_X86_INSTR_SET_AVAILABLE
-        #define MPS_DEFAULT_ALLOCATOR(T) malloc(T, MPS_DEFAULT_ALIGNMENT)
+#ifndef CMPS_DEFAULT_ALLOCATOR
+    #if CMPS_X86_INSTR_SET_AVAILABLE
+        #define CMPS_DEFAULT_ALLOCATOR(T) malloc(T, CMPS_DEFAULT_ALIGNMENT)
     #else
-        #define MPS_DEFAULT_ALLOCATOR(T) malloc(T)
+        #define CMPS_DEFAULT_ALLOCATOR(T) malloc(T)
     #endif
 #endif
 
-#ifndef MPS_STACK_ALLOCATION_LIMIT
-    #define MPS_STACK_ALLOCATION_LIMIT 20000
+#ifndef CMPS_STACK_ALLOCATION_LIMIT
+    #define CMPS_STACK_ALLOCATION_LIMIT 20000
 #endif
 
 #if defined(__LP64__) || defined(_WIN64)
-    #define MPS_64_BIT_ABI
+    #define CMPS_64_BIT_ABI
 #else
-    #define MPS_32_BIT_ABI
+    #define CMPS_32_BIT_ABI
 #endif
 
 #endif
