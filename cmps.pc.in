@@ -2,7 +2,7 @@ prefix=@CMAKE_INSTALL_PREFIX@
 libdir=${prefix}/@CMAKE_INSTALL_LIBDIR@
 includedir=${prefix}/include
 
-Name: mps
+Name: cmps
 Description: mps provides a unified means for using MPS features for library authors..
-Version: @mps_VERSION@
+Version: @cmps_VERSION@
 Cflags: -I${includedir}
