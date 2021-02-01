@@ -3,6 +3,6 @@ libdir=${prefix}/@CMAKE_INSTALL_LIBDIR@
 includedir=${prefix}/include
 
 Name: cmps
-Description: mps provides a unified means for using MPS features for library authors..
+Description: cmps provides a unified means for using MPS features for library authors..
 Version: @cmps_VERSION@
 Cflags: -I${includedir}
