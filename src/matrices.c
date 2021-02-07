@@ -106,9 +106,9 @@ void getConstSubmatrix(Matrix *src, Matrix *dst, const integer startRow,
     if(startRow >= 0 &&  startCol >= 0 && startRow < src->row - 1 && 
        startCol < src->col - 1) 
     {
-        register integer ib;             /*row counter of matrix B*/
-        register integer jb;             /*col counter of matrix B*/
-        register integer ja = startCol;  /*col counter of matrix A*/
+        register integer ib;             /*row counter of matrix dst*/
+        register integer jb;             /*col counter of matrix dst*/
+        register integer ja = startCol;  /*col counter of matrix src*/
 
         for(ib = 0; ib < dst->row; ib++)
         {
@@ -117,10 +117,10 @@ void getConstSubmatrix(Matrix *src, Matrix *dst, const integer startRow,
                 *(dst->matrix + ib + dst->col*jb) = *(src->matrix + startRow + 
                     ib + src->col*ja);
 
-                ja++; /*walking along the matrix A columns*/ 
+                ja++; /*walking along the matrix src columns*/ 
             }
 
-            ja = startCol; /*restarting the column's counter of the matrix A*/
+            ja = startCol; /*restarting the column's counter of the matrix src*/
         }
     }
     else
@@ -138,8 +138,8 @@ void getGeneralSubmatrix(Matrix *src, Matrix *dst, integer *row, integer *col)
         exit (EXIT_FAILURE);
     }
 
-    register integer ib;
-    register integer jb;
+    register integer ib; /*counter loop for dst's rows   */
+    register integer jb; /*counter loop for dst's columns*/
     
     for(ib = 0; ib < dst->row; ib++)
     {   
@@ -158,9 +158,8 @@ void setGeneralSubmatrix(Matrix *dst, Matrix *src, integer *row, integer *col)
         printf ("ERROR: sub-matrix with inappropriate dimensions\n");
         exit (EXIT_FAILURE);
     }
-
-    register integer ib;
-    register integer jb;
+    register integer ib; /*counter loop for src's rows   */
+    register integer jb; /*counter loop for src's columns*/
     
     for(ib = 0; ib < src->row; ib++)
     {   
