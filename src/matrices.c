@@ -5,8 +5,14 @@
  * Author: Almério José Venâncio Pains Soares Pamplona                        *
  * E-mail: almeriopamplona@gmail.com                                          *
  ******************************************************************************
+ * Copyright (c) Almério José Venâncio Pains Soares Pamplona                  *
+ *                                                                            *
+ * Distributed under the terms of the Apache 2 License.                       *
+ *                                                                            *
+ * The full license is in the file LICENSE, distributed with this software.   *
+ ******************************************************************************
  * Creation date    : 04.02.2021                                              *
- * Modification date: 05.02.2021                                              *
+ * Modification date: 07.02.2021                                              *
  ******************************************************************************
  * LIBRARIES:                                                                 *
  ******************************************************************************/
@@ -16,147 +22,191 @@
 #include <string.h>
 
 /******************************************************************************
- * SEVERAL TYPES OF MATRICES CREATIONS                                        *
+ * CONSTRUCTOR AND DESTRUCTOR                                                 *
  ******************************************************************************/
 
-void zeroMatrix(Matrix *A)
+Matrix *makeMatrix(const integer r, const integer c)
 {
-    register unsigned int i;  /*row    counter loop*/
-    register unsigned int j;  /*column counter loop*/
+    /*initialize object's memory block*/
+    Matrix *self = (Matrix *) malloc (sizeof(Matrix));     
+    /*row's    size*/
+    self->row    = r;
+    /*column's size*/                                     
+    self->col    = c;
+    /*matrix initialization in the object's memory block*/                                     
+    self->matrix = (real *) malloc( r * c * sizeof(real)); 
 
-    for(i = 0; i < A->row; i++)
+    /*verify if the object's memory block was allocated into RAM*/
+    if (self == NULL) 
     {
-        for(j = 0; j < A->column; j++)
-        {
-            A->matrix[i + A->row*j] = 0.0;
-        }
-    }
-}
-
-void makeMatrix(Matrix *A, const unsigned int r, const unsigned int c)
-{
-    A->row    = r;                                    /*row's    size*/
-    A->column = c;                                    /*column's size*/
-    A->matrix = (real *) malloc(r * c * sizeof(real)); /*header allocation*/
-
-    /*Verify if the header was allocated in RAM*/
-    if (A->matrix == NULL) 
-    {
-        printf ("ERROR: no free space in RAM to allocate *[%d]\n",r);
+        printf ("ERROR: no free space in RAM to allocate\n");
         exit (EXIT_FAILURE);
     }
 
-    /*Initiate a zero matrix*/
-    zeroMatrix(A);
+    return self;
 }
 
-void freeMatrix(Matrix *A)
+void freeMatrix(Matrix *self)
 {
-    /* Free memory of the element's header*/
-    free(A->matrix);
-}
-
-void copyMatrix(Matrix *A, Matrix *B)
-{
-    /*
-    register unsigned int i;  /*row    counter loop
-    register unsigned int j;  /*column counter loop
-
-    for(i = 0; i < A->row; i++)
-    {
-        for(j = 0; j < A->column; j++)
-        {
-            B->matrix[i + B->row*j] = A->matrix[i + A->row*j];
-        }
-    }*/
-
-    memcpy(B->matrix, A->matrix, A->row * A->column);
-}
-
-void identityMatrix(Matrix *A)
-{
-    register unsigned int i;  /*row    counter loop*/
-    register unsigned int j;  /*column counter loop*/
-
-    for(i = 0; i < A->row; i++)
-    {
-        for(j = 0; j < A->column; j++)
-        {
-            if (i == j)
-            {
-                A->matrix[i + A->row*j] = 1.0;
-            }
-            else
-            {
-                A->matrix[i + A->row*j] = 0.0;
-            }
-        }
-    }
+    free(self->matrix);
+    free(self);
 }
 
 /******************************************************************************
- * GETTING MATRIX ELEMENTS                                                    *
+ * GENERAL PURPOSE METHODS                                                    *
  ******************************************************************************/
 
-void transverseMatrix(Matrix *A)
+void copyMatrix(Matrix* __restrict src, Matrix* __restrict dst)
 {
-    register unsigned int i;  /*row    counter loop*/
-    register unsigned int j;  /*column counter loop*/
+    memcpy(dst->matrix, src->matrix, src->row * src->col * sizeof(real));
+}
 
-    for(i = 0; i < A->row; i++)
+void getColumn(Matrix* __restrict src, vector1D* __restrict dst, 
+    const integer column, const integer nrows)
+{
+    memcpy(dst->x, src->matrix + column*nrows, nrows * sizeof(real));
+}
+
+void getRow(Matrix *src, vector1D* dst, const integer row, const integer ncols)
+{
+    register integer j;
+
+    for(j = 0; j < ncols; j++)
     {
-        for(j = 0; j < A->column; j++)
+        dst->x[j] = *(src->matrix + row + ncols * j);
+    }
+}
+
+void transverseMatrix(Matrix *src)
+{
+    register integer i;  /*row    counter loop*/
+    register integer j;  /*column counter loop*/
+
+    for(i = 0; i < src->row; i++)
+    {
+        for(j = 0; j < src->col; j++)
         {
-            printf("%g\t", A->matrix[i + A->row*j]);
+            printf("%g\t", src->matrix[i + src->col*j]);
         }
 
         printf("\n");
     }
 }
 
-void indexMatrix(Matrix *A,  Matrix *B, unsigned int xStart, unsigned int xEnd, 
-    unsigned int yStart, unsigned int yEnd)
+void getConstSubmatrix(Matrix *src, Matrix *dst, const integer startRow, 
+    const integer startCol)
 {
-    if(xStart < 0 || yStart < 0)
+    if(dst->row > src->row || dst->col > src->row)
     {
-        printf ("ERROR: initial index less than zero\n");
+        printf ("ERROR: sub-matrix with inappropriate dimensions\n");
         exit (EXIT_FAILURE);
     }
 
-    if(xEnd > A->row || yEnd > A->column)
+    /*verify limits of the entry values: startRow and startCol*/
+    if(startRow >= 0 &&  startCol >= 0 && startRow < src->row - 1 && 
+       startCol < src->col - 1) 
     {
-        printf ("ERROR: final index greater than matrix limits\n");
-        exit (EXIT_FAILURE);
-    }
+        register integer ib;             /*row counter of matrix B*/
+        register integer jb;             /*col counter of matrix B*/
+        register integer ja = startCol;  /*col counter of matrix A*/
 
-    register unsigned int i;
-    register unsigned int j;
-    register unsigned int m = xStart;
-    register unsigned int n = yStart;
-
-    for(i = 0; i < B->row; i++)
-    {
-        for (j = 0; j < B->column; j++)
+        for(ib = 0; ib < dst->row; ib++)
         {
-            B->matrix[i + B->row*j] = A->matrix[m + A->row*n];
-            n++; 
+            for(jb = 0; jb < dst->col; jb++)
+            {
+                *(dst->matrix + ib + dst->col*jb) = *(src->matrix + startRow + 
+                    ib + src->col*ja);
+
+                ja++; /*walking along the matrix A columns*/ 
+            }
+
+            ja = startCol; /*restarting the column's counter of the matrix A*/
         }
-        n = yStart;
-        m++;
+    }
+    else
+    {
+        printf ("ERROR: start row or start column are not correct\n");
+        exit (EXIT_FAILURE);
+    }
+}
+
+void getGeneralSubmatrix(Matrix *src, Matrix *dst, integer *row, integer *col)
+{
+    if(dst->row > src->row || dst->col > src->row)
+    {
+        printf ("ERROR: sub-matrix with inappropriate dimensions\n");
+        exit (EXIT_FAILURE);
+    }
+
+    register integer ib;
+    register integer jb;
+    
+    for(ib = 0; ib < dst->row; ib++)
+    {   
+        for(jb = 0; jb < dst->col; jb++)
+        {
+            *(dst->matrix + ib + dst->col * jb) = *(src->matrix + *(row + ib) + 
+                src->col * *(col + jb));
+        }
+    }
+}
+
+void setGeneralSubmatrix(Matrix *dst, Matrix *src, integer *row, integer *col)
+{
+    if(src->row > dst->row || src->col > dst->row)
+    {
+        printf ("ERROR: sub-matrix with inappropriate dimensions\n");
+        exit (EXIT_FAILURE);
+    }
+
+    register integer ib;
+    register integer jb;
+    
+    for(ib = 0; ib < src->row; ib++)
+    {   
+        for(jb = 0; jb < src->col; jb++)
+        {
+            *(src->matrix + *(row + ib) + src->col * *(col + jb)) = *(
+                dst->matrix + ib + dst->col * jb);
+        }
     }
 }
 
 /******************************************************************************
- * LINEAR ALGEBRA                                                             *
+ * HANDFUL MATRICES TYPES                                                     *
  ******************************************************************************/
-/*
-Matrix LU(Matrix *A)
-{
-    Matrix *L = (Matrix *)malloc(sizeof(Matrix))
-    Matrix *
-    if(m = 1)
-    {
 
+void zeroMatrix(Matrix *src)
+{
+    register integer i;  /*row    counter loop*/
+    register integer j;  /*column counter loop*/
+
+    for(i = 0; i < src->row; i++)
+    {
+        for(j = 0; j < src->col; j++)
+        {
+            src->matrix[i + src->col*j] = 0.0;
+        }
     }
 }
-*/
+
+void identityMatrix(Matrix *src)
+{
+    register integer i;  /*row    counter loop*/
+    register integer j;  /*column counter loop*/
+
+    for(i = 0; i < src->row; i++)
+    {
+        for(j = 0; j < src->col; j++)
+        {
+            if (i == j)
+            {
+                src->matrix[i + src->row*j] = 1.0;
+            }
+            else
+            {
+                src->matrix[i + src->row*j] = 0.0;
+            }
+        }
+    }
+}
