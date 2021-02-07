@@ -16,9 +16,8 @@
  ******************************************************************************
  * Description:                                                               *
  *                                                                            *
- * In the present script, vector objects are created as vector1D, vector2D,   *
- * and vector3D.Furthermore, functions for creation, destruction, operations  *
- * and manipulation are defined.                                              *
+ * In the present script, matrices objects are created with some general      *
+ * purpouse functions to manipulate them.                                     *
  *                                                                            *
  ******************************************************************************/
 
