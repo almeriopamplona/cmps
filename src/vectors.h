@@ -5,8 +5,14 @@
  * Author: Almério José Venâncio Pains Soares Pamplona                        *
  * E-mail: almeriopamplona@gmail.com                                          *
  ******************************************************************************
+ * Copyright (c) Almério José Venâncio Pains Soares Pamplona                  *
+ *                                                                            *
+ * Distributed under the terms of the Apache 2 License.                       *
+ *                                                                            *
+ * The full license is in the file LICENSE, distributed with this software.   *
+ ******************************************************************************
  * Creation date    : 28.01.2021                                              *
- * Modification date: 29.01.2021                                              *
+ * Modification date: 07.02.2021                                              *
  ******************************************************************************
  * Description:                                                               *
  *                                                                            *
@@ -16,269 +22,187 @@
  *                                                                            *
  ******************************************************************************/
 
-#ifdef  __VECTORS_H__
-#define __VECTORS_H__
+#ifndef  __VECTORS_H__
+#define  __VECTORS_H__
 
 /******************************************************************************
  * TYPE DEFINITIONS                                                           *
  ******************************************************************************/
 
-// Defining macro constants:
+/* Defining macro constants:*/
 
 #define MEM_SIZE        128
 
-// Defining data-type:
+/* Defining data-type:      */
 
-typedef double          real;      // variables that are in the Real    field  
-typedef unsigned long   integer;   // variables that are in the Integer field
+typedef double          real;     /* variables that are in the Real    field */  
+typedef unsigned long   integer;  /* variables that are in the Integer field */
 
-// Defining vector objects:
+/* Defining vector objects: */
 
-struct vector1D 
+typedef struct vector1D 
 {
 	integer  size;
-	integer  sizeMax;
 	real    *x;
 
-} __attribute__((packed));
+} vector1D;
 
-struct vector2D 
+typedef struct  vector2D
 {
     integer  size;
-    integer  sizeMax;
     real    *x, *y;
 
-} __attribute__((packed));
+} vector2D;
 
-struct vector3D 
+typedef struct  vector3D
 {
     integer  size;
-    integer  sizeMax;
     real    *x, *y, *z;
 
-} __attribute__((packed));
+} vector3D;
 
 /******************************************************************************
- *VECTORS CREATION                                                            *
+ *CONSTRUCTORS AND DISTRUCTORS                                                *
  ******************************************************************************/
 
-/*1D ALGEBRA ---------------------------------------------------------------- */
-
 /******************************************************************************
- * Function:    zeroVector1D                                                  *
- * -------------------------------------------------------------------------- *
- * description: create a vector {x}, where x is an array with n elements, and *
- *              this elements have 0 as their value.                          *
- * -------------------------------------------------------------------------- *
- * input:  vector1D *v      // pointer to some vector v                       *
- *         integer   size   // total number of elements                       *
- * -------------------------------------------------------------------------- *
- * output: v->x = [0, ..., 0]                                                 *
- ******************************************************************************/
-void zeroVector1D(vector1D *v, const integer size);
-
-/******************************************************************************
- * Function:    makeVector1D                                                  *
+ * Function:    makeVectorXD                                                  *
  * -------------------------------------------------------------------------- *
  * description: creates a vector v, attributes the total number of elements,  *
  *              dynamically allocates memory for each of the vector's         * 
- *              components and attributes value 0 for every element.          *
+ *              components.                                                   *
  * -------------------------------------------------------------------------- *
- * input:  vector1D *v      // pointer to some vector v                       *
- *         int       size   // total number of elements                       *
+ * input:  const unsigned long size   // total number of elements             *
  * -------------------------------------------------------------------------- *
- * output: v                // vector v                                       *
+ * output: vectorXD *v                // vector v                             *
  ******************************************************************************/
-void makeVector1D(vector1D *v, const integer size);
+vector1D* makeVector1D(const integer size);
+vector2D* makeVector2D(const integer size);
+vector3D* makeVector3D(const integer size);
 
 /******************************************************************************
- * Function:    freeVector1D                                                  *
+ * Function:    freeVectorXD                                                  *
  * -------------------------------------------------------------------------- *
  * description: free the memory dynamically allocated of each component of    *
  *              the vector v and set the total elements as zero.              *
  * -------------------------------------------------------------------------- *
- * input:  vector1D *v      // pointer to some vector v                       *
+ * input:  vectorXD *v      // pointer to some vector v                       *
  * -------------------------------------------------------------------------- *
- * output: vector v with empty v->x, besides v->n = 0.                        *
+ * output: vector v with empty v->x                                           *
  ******************************************************************************/
-void freeVector1D(vector1D *v);
+void freeVector1D(vector1D *self);
+void freeVector2D(vector2D *self);
+void freeVector3D(vector3D *self);
 
 /******************************************************************************
- * Function:    copyVector1D                                                  *
- * -------------------------------------------------------------------------- *
- * description: uses lazy computing to copy the elements of one vector's      *
- *              components into another vector's components.                  *
- * -------------------------------------------------------------------------- *
- * input:  vector1D *v      // pointer to some vector v                       *
- *         vector1D *w      // pointer to some vector w                       *
- *         integer   size   // total number of elements                       *
- * -------------------------------------------------------------------------- *
- * output: w                // vector w                                       *
- ******************************************************************************/
-void copyVector1D(vector1D *v, vector1D *w, const integer size);
-
-/*2D ALGEBRA ---------------------------------------------------------------- */
-
-/******************************************************************************
- * Function:    zeroVector2D                                                  *
- * -------------------------------------------------------------------------- *
- * description: create a vector {x, y}, where x and y are arrays with n       *
- *              n elements, and this elements have 0 as their value.          *
- * -------------------------------------------------------------------------- *
- * input:  vector2D *v      // pointer to some vector v                       *
- *         integer   size   // total number of elements                       *
- * -------------------------------------------------------------------------- *
- * output: v->x = [0, ..., 0], v->y = [0, ..., 0]                             *
- ******************************************************************************/
-void zeroVector2D(vector2D *v, const integer size);
-
-/******************************************************************************
- * Function:    makeVector2D                                                  *
- * -------------------------------------------------------------------------- *
- * description: creates a vector v, attributes the total number of elements,  *
- *              dynamically allocates memory for each of the vector's         * 
- *              components and attributes value 0 for every element.          *
- * -------------------------------------------------------------------------- *
- * input:  vector2D *v      // pointer to some vector v                       *
- *         int       size   // total number of elements                       *
- * -------------------------------------------------------------------------- *
- * output: v                // vector v                                       *
- ******************************************************************************/
-void makeVector2D(vector2D *v, const integer size);
-
-/******************************************************************************
- * Function:    freeVector2D                                                    *
- * -------------------------------------------------------------------------- *
- * description: free the memory dynamically allocated of each component of    *
- *              the vector v and set the total elements as zero.              *
- * -------------------------------------------------------------------------- *
- * input:  vector2D *v      // pointer to some vector v                       *
- * -------------------------------------------------------------------------- *
- * output: vector v with empty v->x, besides v->n = 0.                        *
- ******************************************************************************/
-void freeVector2D(vector2D *v);
-
-/******************************************************************************
- * Function:    copyVector2D                                                  *
- * -------------------------------------------------------------------------- *
- * description: uses lazy computing to copy the elements of one vector's      *
- *              components into another vector's components.                  *
- * -------------------------------------------------------------------------- *
- * input:  vector2D *v      // pointer to some vector v                       *
- *         vector2D *w      // pointer to some vector w                       *
- *         integer   size   // total number of elements                       *
- * -------------------------------------------------------------------------- *
- * output: w                // vector w                                       *
- ******************************************************************************/
-void copyVector2D(vector2D *v, vector2D *w, const integer n);
-
-/*3D ALGEBRA ---------------------------------------------------------------- */
-
-/******************************************************************************
- * Function:    zeroVector3D                                                  *
- * -------------------------------------------------------------------------- *
- * description: create a vector {x, y, z}, where x, y and z are arrays with n *
- *              elements, and this elements have 0 as their value.            *
- * -------------------------------------------------------------------------- *
- * input:  vector3D *v      // pointer to some vector v                       *
- *         integer   size   // total number of elements                       *
- * -------------------------------------------------------------------------- *
- * output: v->x = [0, ..., 0], v->y = [0, ..., 0], v->z = [0, ..., 0]         *
- ******************************************************************************/
-void zeroVector3D(vector3D *v, const integer size);
-
-/******************************************************************************
- * Function:    makeVector3D                                                  *
- * -------------------------------------------------------------------------- *
- * description: creates a vector v, attributes the total number of elements,  *
- *              dynamically allocates memory for each of the vector's         * 
- *              components and attributes value 0 for every element.          *
- * -------------------------------------------------------------------------- *
- * input:  vector3D *v      // pointer to some vector v                       *
- *         int       size   // total number of elements                       *
- * -------------------------------------------------------------------------- *
- * output: v                // vector v                                       *
- ******************************************************************************/
-void makeVector3D(vector3D *v, const integer size);
-
-/******************************************************************************
- * Function:    freeVector3D                                                  *
- * -------------------------------------------------------------------------- *
- * description: free the memory dynamically allocated of each component of    *
- *              the vector v and set the total elements as zero.              *
- * -------------------------------------------------------------------------- *
- * input:  vector3D *v      // pointer to some vector v                       *
- * -------------------------------------------------------------------------- *
- * output: vector v with empty v->x, besides v->n = 0.                        *
- ******************************************************************************/
-void freeVector3D(vector3D *v);
-
-/******************************************************************************
- * Function:    copyVector3D                                                  *
- * -------------------------------------------------------------------------- *
- * description: uses lazy computing to copy the elements of one vector's      *
- *              components into another vector's components.                  *
- * -------------------------------------------------------------------------- *
- * input:  vector3D *v      // pointer to some vector v                       *
- *         vector3D *w      // pointer to some vector w                       *
- *         integer   size   // total number of elements                       *
- * -------------------------------------------------------------------------- *
- * output: w                // vector w                                       *
- ******************************************************************************/
-void copyVector3D(vector3D *v, vector3D *w, const integer n);
-
-
-
-/******************************************************************************
- * VECTORS OPERATION                                                          *
+ * GENERAL PURPOSE METHODS                                                    *
  ******************************************************************************/
 
-/*1D ALGEBRA ---------------------------------------------------------------- */
+/******************************************************************************
+ * Function:    copyVectorXD                                                  *
+ * -------------------------------------------------------------------------- *
+ * description: uses memcpy to copy the elements of vector's components into  *
+ *              another vector's components.                                  *
+ * -------------------------------------------------------------------------- *
+ * input:  vectorXD *src   // pointer to the source  vector                   *
+ *         vectorXD *dst   // pointer to the destine vector                   *
+ * -------------------------------------------------------------------------- *
+ * output: void                                                               *
+ ******************************************************************************/
+void copyVector1D(vector1D* __restrict src, vector1D* __restrict dst);
+void copyVector2D(vector2D* __restrict src, vector2D* __restrict dst);
+void copyVector3D(vector3D* __restrict src, vector3D* __restrict dst);
 
 /******************************************************************************
- * Function:    addVector1D                                                   *
+ * Function:    transverseVectorXD                                            *
+ * -------------------------------------------------------------------------- *
+ * description: prints every element of the vector's components. For 2D and   *
+ *              3D vectors, there is the option to choose which component one *
+ *              wants to print:                                               *
+ *                  - 2D:  0 -> x;    1 -> y;    2 -> x,y                     *
+ *                  - 3D:  0 -> x;    1 -> y;    2 -> z;  3 -> x,y,z;         *
+ *                        12 -> x,y; 13 -> x,z; 23 -> y,z                     *
+ * -------------------------------------------------------------------------- *
+ * input:  vectorXD *self                  // pointer to the source  vector   *
+ *         const unsigned int components   // print options for 2D and 3D     *
+ * -------------------------------------------------------------------------- *
+ * output: void                                                               *
+ ******************************************************************************/
+void transverseVector1D(vector1D *self);
+void transverseVector2D(vector2D *self, const unsigned int components);
+void transverseVector3D(vector3D *self, const unsigned int components);
+
+/******************************************************************************
+ * HANDFUL VECTORS                                                            *
+ ******************************************************************************/
+
+/******************************************************************************
+ * Function:    zeroVectorXD                                                  *
+ * -------------------------------------------------------------------------- *
+ * description: create a vector, every element of each component is zero.     *
+ * -------------------------------------------------------------------------- *
+ * input:  vectorXD *self      // pointer to some vector                      *
+ * -------------------------------------------------------------------------- *
+ * output: void                                                               *
+ ******************************************************************************/
+void zeroVector1D(vector1D *self);
+void zeroVector2D(vector2D *self);
+void zeroVector3D(vector3D *self);
+
+/******************************************************************************
+ * ELEMENTWISE OPERATIONS                                                     *
+ ******************************************************************************/
+
+/******************************************************************************
+ * Function:    addVectorXD                                                   *
  * -------------------------------------------------------------------------- *
  * description: uses lazy computing to add two vectors, v and w, into one     *
  *              vector s.                                                     *
  * -------------------------------------------------------------------------- *
- * input:  vector1D *v      // pointer to some vector v                       *
- *         vector1D *w      // pointer to some vector w                       *
- *         vector1D *s      // pointer to some vector s                       *
+ * input:  vectorXD *v      // second vector v                                *
+ *         vectorXD *w      // first  vector w                                *
+ *         vectorXD *s      // addition result s                              *
  *         integer   size   // total number of elements                       *
  * -------------------------------------------------------------------------- *
- * output: s                // result vector of the addition                  *
+ * output: void                                                               *
  ******************************************************************************/
 void addVector1D(vector1D *v, vector1D *w, vector1D *s, const integer size);
+void addVector2D(vector2D *v, vector2D *w, vector2D *s, const integer size);
+void addVector3D(vector3D *v, vector3D *w, vector3D *s, const integer size);
 
 /******************************************************************************
- * Function:    subVector1D                                                   *
+ * Function:    subVectorXD                                                   *
  * -------------------------------------------------------------------------- *
  * description: uses lazy computing to subtract vectors w from vector v into  *
  *              one vector s.                                                 *
  * -------------------------------------------------------------------------- *
- * input:  vector1D *v      // pointer to some vector v                       *
- *         vector1D *w      // pointer to some vector w                       *
- *         vector1D *s      // pointer to some vector s                       *
+ * input:  vectorXD *v      // second vector v                                *
+ *         vectorXD *w      // first  vector w                                *
+ *         vectorXD *s      // subtraction result s                           *
  *         integer   size   // total number of elements                       *
  * -------------------------------------------------------------------------- *
- * output: s                // result vector of the subtraction               *
+ * output: void                                                               *
  ******************************************************************************/
 void subVector1D(vector1D *v, vector1D *w, vector1D *s, const integer size);
+void subVector2D(vector2D *v, vector2D *w, vector2D *s, const integer size);
+void subVector3D(vector3D *v, vector3D *w, vector3D *s, const integer size);
 
 /******************************************************************************
- * Function:    mulVector1D                                                   *
+ * Function:    mulVectorXD                                                   *
  * -------------------------------------------------------------------------- *
  * description: uses lazy computing to multiply vectors w and v into one      *
  *              vector s.                                                 *
  * -------------------------------------------------------------------------- *
- * input:  vector1D *v      // pointer to some vector v                       *
- *         vector1D *w      // pointer to some vector w                       *
- *         vector1D *s      // pointer to some vector s                       *
+ * input:  vectorXD *v      // second vector v                                *
+ *         vectorXD *w      // first  vector w                                *
+ *         vectorXD *s      // multiplication result s                        *
  *         integer   size   // total number of elements                       *
  * -------------------------------------------------------------------------- *
- * output: s                // result vector of the product                   *
+ * output: void                                                               *
  ******************************************************************************/
 void mulVector1D(vector1D *v, vector1D *w, vector1D *s, const integer size);
+void mulVector2D(vector2D *v, vector2D *w, vector2D *s, const integer size);
+void mulVector3D(vector3D *v, vector3D *w, vector3D *s, const integer size);
 
 /******************************************************************************
  * Function:    divVector1D                                                   *
@@ -286,139 +210,15 @@ void mulVector1D(vector1D *v, vector1D *w, vector1D *s, const integer size);
  * description: uses lazy computing to divide vectors v by vector w into      *
  *              one vector s.                                                 *
  * -------------------------------------------------------------------------- *
- * input:  vector1D *v      // pointer to some vector v                       *
- *         vector1D *w      // pointer to some vector w                       *
- *         vector1D *s      // pointer to some vector s                       *
+ * input:  vectorXD *v      // second vector v                                *
+ *         vectorXD *w      // first  vector w                                *
+ *         vectorXD *s      // division result s                              *
  *         integer   size   // total number of elements                       *
  * -------------------------------------------------------------------------- *
- * output: s                // result vector of the division                  *
+ * output: void                                                               *
  ******************************************************************************/
 void divVector1D(vector1D *v, vector1D *w, vector1D *s, const integer size);
-
-
-/*2D ALGEBRA ---------------------------------------------------------------- */
-
-/******************************************************************************
- * Function:    addVector2D                                                   *
- * -------------------------------------------------------------------------- *
- * description: uses lazy computing to add two vectors, v and w, into one     *
- *              vector s.                                                     *
- * -------------------------------------------------------------------------- *
- * input:  vector2D *v      // pointer to some vector v                       *
- *         vector2D *w      // pointer to some vector w                       *
- *         vector2D *s      // pointer to some vector s                       *
- *         integer   size   // total number of elements                       *
- * -------------------------------------------------------------------------- *
- * output: s                // result vector of the addition                  *
- ******************************************************************************/
-void addVector3D(vector2D *v, vector2D *w, vector2D *s, const integer size);
-
-/******************************************************************************
- * Function:    subVector2D                                                   *
- * -------------------------------------------------------------------------- *
- * description: uses lazy computing to subtract vectors w from vector v into  *
- *              one vector s.                                                 *
- * -------------------------------------------------------------------------- *
- * input:  vector2D *v      // pointer to some vector v                       *
- *         vector2D *w      // pointer to some vector w                       *
- *         vector2D *s      // pointer to some vector s                       *
- *         integer   size   // total number of elements                       *
- * -------------------------------------------------------------------------- *
- * output: s                // result vector of the subtraction               *
- ******************************************************************************/
-void subVector2D(vector2D *v, vector2D *w, vector2D *s, const integer size);
-
-/******************************************************************************
- * Function:    mulVector2D                                                   *
- * -------------------------------------------------------------------------- *
- * description: uses lazy computing to multiply vectors w and v into one      *
- *              vector s.                                                     *
- * -------------------------------------------------------------------------- *
- * input:  vector2D *v      // pointer to some vector v                       *
- *         vector2D *w      // pointer to some vector w                       *
- *         vector2D *s      // pointer to some vector s                       *
- *         integer   size   // total number of elements                       *
- * -------------------------------------------------------------------------- *
- * output: s                // result vector of the product                   *
- ******************************************************************************/
-void mulVector3D(vector2D *v, vector2D *w, vector2D *s, const integer size);
-
-/******************************************************************************
- * Function:    divVector2D                                                   *
- * -------------------------------------------------------------------------- *
- * description: uses lazy computing to divide vectors v by vector w into      *
- *              one vector s.                                                 *
- * -------------------------------------------------------------------------- *
- * input:  vector2D *v      // pointer to some vector v                       *
- *         vector2D *w      // pointer to some vector w                       *
- *         vector2D *s      // pointer to some vector s                       *
- *         integer   size   // total number of elements                       *
- * -------------------------------------------------------------------------- *
- * output: s                // result vector of the division                  *
- ******************************************************************************/
 void divVector2D(vector2D *v, vector2D *w, vector2D *s, const integer size);
-
-
-/*3D ALGEBRA ---------------------------------------------------------------- */
-
-/******************************************************************************
- * Function:    addVector3D                                                   *
- * -------------------------------------------------------------------------- *
- * description: uses lazy computing to add two vectors, v and w, into one     *
- *              vector s.                                                     *
- * -------------------------------------------------------------------------- *
- * input:  vector3D *v      // pointer to some vector v                       *
- *         vector3D *w      // pointer to some vector w                       *
- *         vector3D *s      // pointer to some vector s                       *
- *         integer   size   // total number of elements                       *
- * -------------------------------------------------------------------------- *
- * output: s                // result vector of the addition                  *
- ******************************************************************************/
-void addVector3D(vector3D *v, vector3D *w, vector3D *s, const integer size);
-
-/******************************************************************************
- * Function:    subVector3D                                                   *
- * -------------------------------------------------------------------------- *
- * description: uses lazy computing to subtract vectors w from vector v into  *
- *              one vector s.                                                 *
- * -------------------------------------------------------------------------- *
- * input:  vector3D *v      // pointer to some vector v                       *
- *         vector3D *w      // pointer to some vector w                       *
- *         vector3D *s      // pointer to some vector s                       *
- *         integer   size   // total number of elements                       *
- * -------------------------------------------------------------------------- *
- * output: s                // result vector of the subtraction               *
- ******************************************************************************/
-void subVector3D(vector3D *v, vector3D *w, vector3D *s, const integer size);
-
-/******************************************************************************
- * Function:    mulVector3D                                                   *
- * -------------------------------------------------------------------------- *
- * description: uses lazy computing to multiply vectors w and v into one      *
- *              vector s.                                                     *
- * -------------------------------------------------------------------------- *
- * input:  vector3D *v      // pointer to some vector v                       *
- *         vector3D *w      // pointer to some vector w                       *
- *         vector3D *s      // pointer to some vector s                       *
- *         integer   size   // total number of elements                       *
- * -------------------------------------------------------------------------- *
- * output: s                // result vector of the product                   *
- ******************************************************************************/
-void mulVector3D(vector3D *v, vector3D *w, vector3D *s, const integer size);
-
-/******************************************************************************
- * Function:    divVector3D                                                   *
- * -------------------------------------------------------------------------- *
- * description: uses lazy computing to divide vectors v by vector w into      *
- *              one vector s.                                                 *
- * -------------------------------------------------------------------------- *
- * input:  vector3D *v      // pointer to some vector v                       *
- *         vector3D *w      // pointer to some vector w                       *
- *         vector3D *s      // pointer to some vector s                       *
- *         integer   size   // total number of elements                       *
- * -------------------------------------------------------------------------- *
- * output: s                // result vector of the division                  *
- ******************************************************************************/
 void divVector3D(vector3D *v, vector3D *w, vector3D *s, const integer size);
 
 #endif
