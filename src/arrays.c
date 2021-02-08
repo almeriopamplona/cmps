@@ -1,111 +1,158 @@
 /******************************************************************************
  *                   MPS - MOVING PARTICLES SEMI-IMPLICIT                     *
- *                                ARRAYS.H                                    *
+ *                                ARRAYS.C                                    *
  ******************************************************************************
  * Author: Almério José Venâncio Pains Soares Pamplona                        *
  * E-mail: almeriopamplona@gmail.com                                          *
  ******************************************************************************
- * Creation date    : 29.01.2021                                              *
- * Modification date: 29.01.2021                                              *
- ******************************************************************************/
+ * Creation date    : 07.02.2021                                              *
+ * Modification date: 07.02.2021                                              *
+ ******************************************************************************
+ * Copyright (c) Almério José Venâncio Pains Soares Pamplona                  *
+ *                                                                            *
+ * Distributed under the terms of the Apache 2 License.                       *
+ *                                                                            *
+ * The full license is in the file LICENSE, distributed with this software.   *
+ ******************************************************************************
+
+#include "arrays.h" 
 
 #include <stdio.h>  /*input and output variable manipulation*/
 #include <stdlib.h> /*address and memory manipulation*/
+#include <string.h> /*string manipulation*/
 #include <math.h>   /*mathematical functions*/
 
-#include "arrays.h"
-
 /******************************************************************************
- * ARRAYS CREATION                                                            *
+ * CONSTRUCTORS AND DISTRUCTORS                                               *
  ******************************************************************************/
 
 /* Integer ------------------------------------------------------------------ */
 
-void makeIntArray(intArray *a, const integer size)
-{
-    a -> size = size; 
-    a -> v    = (integer *) malloc(size * sizeof(integer), MEM_SIZE);
-    
-    if (v -> x == NULL) 
+intArray* makeIntArray(const integer size)
+{ 
+    intArray *self = (intArray *) malloc(sizeof(intArray));
+
+    self->size = size;
+    self->arr  = (integer *) malloc(size * sizeof(integer));
+
+    if (self == NULL) 
     {
-        printf ("ERROR: no free space in RAM to allocate x\n");
+        printf ("ERROR: no free space in RAM to allocate the object\n");
         exit (EXIT_FAILURE);
     }
+
+    return self;
 }
 
-void freeIntArray(intArray *a)
+int32Array* makeInt32Array(const integer size)
 {
-    free(a -> v);
+    int32Array *self = (int32Array *) malloc(sizeof(int32Array));
 
-    a -> size = 0;
+    self->size = size;
+    self->arr  = (integer32 *) malloc(size * sizeof(integer32));
+
+    if (self == NULL) 
+    {
+        printf ("ERROR: no free space in RAM to allocate the object\n");
+        exit (EXIT_FAILURE);
+    }
+
+    return self;
+}
+
+realArray* makeRealArray(const integer size)
+{
+    realArray *self = (realArray *) malloc(sizeof(realArray));
+
+    self->size = size;
+    self->arr  = (real *) malloc(size * sizeof(real));
+
+    if (self == NULL) 
+    {
+        printf ("ERROR: no free space in RAM to allocate the object\n");
+        exit (EXIT_FAILURE);
+    }
+
+    return self;
+}
+
+void freeIntArray(intArray *self)
+{
+    free(self->arr);
+    free(self);
+}
+
+void freeInt32Array(int32Array *self)
+{
+    free(self->arr);
+    free(self);
+}
+
+void freeRealArray(realArray *self)
+{
+    free(self->arr);
+    free(self);
 }
 
 void zeroIntArray(intArray *a, const integer size)
 {
-    for (register unsigned int i = 0; i < size; i++)
+    register integer i;
+
+    for (i = 0; i < size; i++)
     {
-        a -> v[i] = 0;
+        a->arr[i] = 0;
     }
-}
-
-/* Integer32 ---------------------------------------------------------------- */
-
-void makeInt32Array(int32Array *a, const integer size)
-{
-    a -> size = size; 
-    a -> v    = (integer32 *) malloc(size * sizeof(integer32), MEM_SIZE);
-    
-    if (v -> x == NULL) 
-    {
-        printf ("ERROR: no free space in RAM to allocate x\n");
-        exit (EXIT_FAILURE);
-    }
-}
-
-void freeInt32Array(int32Array *a)
-{
-    free(a -> v);
-
-    a -> size = 0;
 }
 
 void zeroInt32Array(int32Array *a, const integer size)
 {
-    for (register unsigned int i = 0; i < size; i++)
+    register integer32 i;
+    for (i = 0; i < size; i++)
     {
-        a -> v[i] = 0;
+        a->arr[i] = 0;
     }
 }
 
-/* Real --------------------------------------------------------------------- */
+void zeroRealArray(realArray *a, const integer size)
+{
+    register integer i;
+    for (i = 0; i < size; i++)
+    {
+        a->arr[i] = 0.0;
+    }
+}
 
-void linspace (real *a, real start, real stop, const integer size) 
+void linspace (realArray *a, real start, real stop, const integer size) 
 {    
     if (size > 1) 
     {
         real da = (stop - start) / (size - 1); /*sequence increment step*/ 
 
-        for (register unsigned int i = 0; i < size; i++) 
+        register integer i;
+
+        for (i = 0; i < size; i++) 
         {
-            a[i] = start + i * da; 
+            a->arr[i] = start + i * da; 
         }
     }
     else 
     {
-        *a = 0.5 * (stop + start)
+        *(a->arr) = 0.5 * (stop + start);
     }
 }
 
-void linspace2 (real *a, real start, real stop, real dx) 
+void linspace2 (realArray *a, real start, real stop, real dx) 
 {
     register integer size; /*total number of elements*/
-    scalar_t da2;          /*sequence increment      */
+    real da2;              /*sequence increment      */
      
-    size = floor((stop - start) / da); 
+    size = floor((stop - start) / dx); 
     da2  = (stop - start) / size;     
 
-    for (register unsigned int i = 0; i < size; i++) 
+    register integer i;
+    
+    for ( i = 0; i < size; i++) 
     {
-        a[i] = start + i * da2;
+        a->arr[i] = start + i * da2;
     }
 }
